@@ -4,7 +4,7 @@ const todos = [{
     completed: true
 },
 {
-    text: "Apple",
+    text: "Apple food",
     completed: false
 },
 {
@@ -20,26 +20,40 @@ const todos = [{
     completed: false
 }]
 
-// Find how many incompleted todos there are
-const incompletedTodos = todos.filter(function(todo) {
-    return !todo.completed
-})
+const filters = {
+    searchText: ''
+}
 
-// Add a heading to the document
-const newHeading = document.createElement('h2')
-newHeading.textContent = `You have ${incompletedTodos.length} incompleted todos left`
-document.querySelector('body').appendChild(newHeading)
+const renderTodos = function (todos, filters) {
+    const filteredTodos = todos.filter(function (todo) {
+        return todo.text.toLowerCase().includes(filters.searchText.toLowerCase())
+    })
 
-// List all todos
-todos.forEach(function(todo) {
-    const newParagraph = document.createElement('p')
-    newParagraph.textContent = todo.text
-    document.querySelector('body').appendChild(newParagraph)
-})
+    // Summary of incompleted todos always is rendered
+    const incompletedTodos = filteredTodos.filter(function (todo) {
+        return !todo.completed
+    })
 
-// Search amidst todos
+    document.querySelector('#body__search-result-todos').innerHTML = ''
+
+    const summary = document.createElement('h3')
+    summary.textContent = `You have ${incompletedTodos.length} incompleted todos left`
+    document.querySelector('#body__search-result-todos').appendChild(summary)
+
+    filteredTodos.forEach(function (todo) {
+        const foundTodo = document.createElement('p')
+        foundTodo.textContent = todo.text
+        document.querySelector('#body__search-result-todos').appendChild(foundTodo)
+    })
+}
+
+renderTodos(todos, filters)
+
+// Search for todos
 document.querySelector('#body__search-todo-input').addEventListener('input', function (e) {
-    console.log(e.target.value)
+    filters.searchText = e.target.value
+    renderTodos(todos, filters)
+
 })
 
 // Add event listener on Add a Todo button

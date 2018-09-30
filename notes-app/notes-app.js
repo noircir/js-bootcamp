@@ -31,7 +31,7 @@ const notes = [
 ]
 
 const filters = {
-    searchText: ''
+    searchText: 'a'
 }
 
 const renderNotes = function (notes, filters) {
