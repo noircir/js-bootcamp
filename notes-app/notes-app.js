@@ -13,25 +13,25 @@
 
 const notes = [
     {
-        title: "Maria",
+        title: "Maria will be working in the office",
         text: "I would like to go to Spain"
     }, {
-        title: "Hobbit",
+        title: "Hobbits live in cavernous houses",
         text: "Exercise. Eating a bit better."
     }, {
-        title: "Office",
+        title: "Office is closed",
         text: "Get a new seat"
     }, {
-        title: "Wonderful",
+        title: "Wonderful theater production",
         text: "Get a new seat"
     }, {
-        title: "Apple",
+        title: "Apple was sparkling with sweaty water dew",
         text: "Get a new seat"
     }
 ]
 
 const filters = {
-    searchText: 'a'
+    searchText: ''
 }
 
 const renderNotes = function (notes, filters) {
@@ -54,18 +54,15 @@ document.querySelector('#create-note').addEventListener('click', function (e) {
     e.target.textContent = "The button was clicked"
 })
 
-document.querySelector('#remove-all').addEventListener('click', function (e) {
-    document.querySelectorAll('.note').forEach(function (note) {
-        note.remove()
-    })
-})
-
 document.querySelector('#search-text').addEventListener('input', function (e) {
     filters.searchText = e.target.value 
     renderNotes(notes, filters)
 }) 
 
-
+document.querySelector('#name-form').addEventListener('submit', function (e) {
+    e.preventDefault()
+    e.target.elements.firstName.value = ''
+})
 
 // --- Single ---
 // p
