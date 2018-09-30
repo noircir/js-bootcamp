@@ -1,24 +1,79 @@
-// const p = document.querySelector('p')
-// // p.remove()
+// const ps = document.querySelectorAll('p')
 
-// const h6 = document.querySelector('h6')
-// console.log(p)
-// h6.remove()
+// ps.forEach(function (p) {
+//     p.textContent = '*********'
+//     console.log(p.textContent)
+//     // p.remove()
+// })
 
-const ps = document.querySelectorAll('p')
+// // Add a new element
+// const newParagraph = document.createElement('p')
+// newParagraph.textContent= 'It was a nice walk'
+// document.querySelector('body').appendChild(newParagraph)
 
-// console.log(ps)
+const notes = [
+    {
+        title: "Maria",
+        text: "I would like to go to Spain"
+    }, {
+        title: "Hobbit",
+        text: "Exercise. Eating a bit better."
+    }, {
+        title: "Office",
+        text: "Get a new seat"
+    }, {
+        title: "Wonderful",
+        text: "Get a new seat"
+    }, {
+        title: "Apple",
+        text: "Get a new seat"
+    }
+]
 
-ps.forEach(function (p) {
-    p.textContent = '*********'
-    console.log(p.textContent)
-    // p.remove()
+const filters = {
+    searchText: ''
+}
+
+const renderNotes = function (notes, filters) {
+    const filteredNotes = notes.filter(function (note) {
+        return note.title.toLowerCase().includes(filters.searchText.toLowerCase())
+    })
+
+    document.querySelector('#notes').innerHTML = ''
+
+    filteredNotes.forEach(function (note) {
+        const foundNote = document.createElement('p')
+        foundNote.textContent = note.title
+        document.querySelector('#notes').appendChild(foundNote)
+    })
+}
+renderNotes(notes, filters)
+
+document.querySelector('#create-note').addEventListener('click', function (e) {
+    // console.log(e)
+    e.target.textContent = "The button was clicked"
 })
 
-// Add a new element
+document.querySelector('#remove-all').addEventListener('click', function (e) {
+    document.querySelectorAll('.note').forEach(function (note) {
+        note.remove()
+    })
+})
 
-const newParagraph = document.createElement('p')
+document.querySelector('#search-text').addEventListener('input', function (e) {
+    filters.searchText = e.target.value 
+    renderNotes(notes, filters)
+}) 
 
-newParagraph.textContent= 'It was a nice walk'
 
-document.querySelector('body').appendChild(newParagraph)
+
+// --- Single ---
+// p
+// #replace
+// .item
+
+// --- Multiple ---
+// p#order
+// button.inventory
+// h1#title.application
+// h1.application#title
