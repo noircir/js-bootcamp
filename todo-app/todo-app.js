@@ -1,32 +1,21 @@
 
-const todos = [{
-    text: "Wonderful theater production water about food",
-    completed: true
-},
-{
-    text: "Apple was sparkling with sweaty water dew",
-    completed: false
-},
-{
-    text: "Buy food",
-    completed: true
-},
-{
-    text: "Read more of Chech author about water apples and dew",
-    completed: true
-},
-{
-    text: "Zena is a strange production name. She eats strange food.",
-    completed: false
-}]
+let todos = []
 
 const filters = {
     searchText: '',
     hideCompleted: false
 }
 
+// Read and parse the data when the app starts up
+const todosJSON = localStorage.getItem('todos')
+// If local storage has data, parse it and use it
+if (todosJSON !== null) {
+    todos = JSON.parse(todosJSON)
+}
+
 const renderTodos = function (todos, filters) {
     // SOLUTION 3
+    
     const filteredTodos = todos.filter(function (todo) {
         const searchTextMatch = todo.text.toLowerCase().includes(filters.searchText.toLowerCase().trim())
         const hideCompletedMatch = !filters.hideCompleted || !todo.completed
@@ -34,7 +23,7 @@ const renderTodos = function (todos, filters) {
     })
 
     // SOLUTION 2
-    
+
     // let filteredTodos = todos.filter(function (todo) {
     //     return todo.text.toLowerCase().includes(filters.searchText.toLowerCase().trim())
     // })
@@ -72,9 +61,15 @@ const renderTodos = function (todos, filters) {
 
     // 3) Render search results
     filteredTodos.forEach(function (todo) {
-        const foundTodo = document.createElement('p')
-        foundTodo.textContent = todo.text
-        document.querySelector('#div__todos').appendChild(foundTodo)
+        const todoEl = document.createElement('p')
+
+        // if (todo.text.length > 0) {
+            todoEl.textContent = todo.text
+        // } else {
+        //     todoEl.textContent = 'Unnamed todo'
+        // }
+
+        document.querySelector('#div__todos').appendChild(todoEl)
     })
 }
 
@@ -87,7 +82,7 @@ document.querySelector('#body__search-todo-input').addEventListener('input', fun
     renderTodos(todos, filters)
 })
 
-// Add a new todo form
+// Add a new todo 
 document.querySelector('#todo-form').addEventListener('submit', function (e) {
     e.preventDefault()
     newTodo = {
@@ -95,6 +90,9 @@ document.querySelector('#todo-form').addEventListener('submit', function (e) {
         completed: false
     }
     todos.push(newTodo)
+    if (newTodo.text !== "") {
+        localStorage.setItem('todos', JSON.stringify(todos))
+    }
     e.target.elements.newTodo.value = ''
     renderTodos(todos, filters)
     console.log(todos)

@@ -1,37 +1,15 @@
-// const ps = document.querySelectorAll('p')
-
-// ps.forEach(function (p) {
-//     p.textContent = '*********'
-//     console.log(p.textContent)
-//     // p.remove()
-// })
-
-// // Add a new element
-// const newParagraph = document.createElement('p')
-// newParagraph.textContent= 'It was a nice walk'
-// document.querySelector('body').appendChild(newParagraph)
-
-const notes = [
-    {
-        title: "Maria will be working in the office",
-        text: "I would like to go to Spain"
-    }, {
-        title: "Hobbits live in cavernous houses",
-        text: "Exercise. Eating a bit better."
-    }, {
-        title: "Office is closed",
-        text: "Get a new seat"
-    }, {
-        title: "Wonderful theater production",
-        text: "Get a new seat"
-    }, {
-        title: "Apple was sparkling with sweaty water dew",
-        text: "Get a new seat"
-    }
-]
+let notes = []
 
 const filters = {
     searchText: ''
+}
+
+// Check for existing local storage data
+const notesJSON = localStorage.getItem('notes')
+// If something exists in the local storage, populate notes
+// with the local storage data
+if (notesJSON !== null) {
+    notes = JSON.parse(notesJSON)
 }
 
 const renderNotes = function (notes, filters) {
@@ -42,16 +20,28 @@ const renderNotes = function (notes, filters) {
     document.querySelector('#notes').innerHTML = ''
 
     filteredNotes.forEach(function (note) {
-        const foundNote = document.createElement('p')
-        foundNote.textContent = note.title
-        document.querySelector('#notes').appendChild(foundNote)
+        const noteEl = document.createElement('p')
+
+        if (note.title.length > 0) {
+            noteEl.textContent = note.title
+        } else {
+            noteEl.textContent = 'Unnamed note'
+        }
+
+        document.querySelector('#notes').appendChild(noteEl)
     })
 }
 renderNotes(notes, filters)
 
+// Create a note
 document.querySelector('#create-note').addEventListener('click', function (e) {
-    // console.log(e)
-    e.target.textContent = "The button was clicked"
+    // empty note by default
+    notes.push({
+        title: '',
+        body: ''
+    })
+    localStorage.setItem('notes', JSON.stringify(notes))
+    renderNotes(notes, filters)
 })
 
 document.querySelector('#search-text').addEventListener('input', function (e) {
@@ -59,8 +49,8 @@ document.querySelector('#search-text').addEventListener('input', function (e) {
     renderNotes(notes, filters)
 }) 
 
-document.querySelector('#for-fun').addEventListener('change', function (e) {
-    console.log(e.target.checked)
+document.querySelector('#filter-by').addEventListener('change', function (e) {
+    console.log(e.target.value)
 })
 // --- Single ---
 // p
