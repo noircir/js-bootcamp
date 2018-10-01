@@ -63,11 +63,11 @@ const renderTodos = function (todos, filters) {
     filteredTodos.forEach(function (todo) {
         const todoEl = document.createElement('p')
 
-        // if (todo.text.length > 0) {
+        if (todo.text.length > 0) {
             todoEl.textContent = todo.text
-        // } else {
-        //     todoEl.textContent = 'Unnamed todo'
-        // }
+        } else {
+            // todoEl.textContent = 'Unnamed todo'
+        }
 
         document.querySelector('#div__todos').appendChild(todoEl)
     })
@@ -89,8 +89,9 @@ document.querySelector('#todo-form').addEventListener('submit', function (e) {
         text: e.target.elements.newTodo.value,
         completed: false
     }
-    todos.push(newTodo)
+    
     if (newTodo.text !== "") {
+        todos.push(newTodo)
         localStorage.setItem('todos', JSON.stringify(todos))
     }
     e.target.elements.newTodo.value = ''
