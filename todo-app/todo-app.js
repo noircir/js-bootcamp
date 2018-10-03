@@ -18,6 +18,7 @@ document.querySelector('#body__search-todo-input').addEventListener('input', fun
 document.querySelector('#todo-form').addEventListener('submit', function (e) {
     e.preventDefault()
     newTodo = {
+        id: uuidv4(),
         text: e.target.elements.newTodo.value,
         completed: false
     }
@@ -30,6 +31,11 @@ document.querySelector('#todo-form').addEventListener('submit', function (e) {
 })
 
 // If "Hide completed" checkbox is checked, update filter
+document.querySelector('#hide-completed').addEventListener('change', function (e) {
+    filters.hideCompleted = e.target.checked
+    renderTodos(todos, filters)
+})
+
 document.querySelector('#hide-completed').addEventListener('change', function (e) {
     filters.hideCompleted = e.target.checked
     renderTodos(todos, filters)
