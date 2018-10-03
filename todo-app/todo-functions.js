@@ -47,7 +47,7 @@ const renderTodos = function (todos, filters) {
     //     filteredTodos = filteredTodos.filter(function (todo) {
     //         return !todo.completed
     //     })
-    // } 
+    // }  
 
     generateSummaryDOM(filteredTodos)
 
@@ -58,9 +58,21 @@ const renderTodos = function (todos, filters) {
 
 // Get the DOM elements for an individual note
 const generateTodoDOM = function (todo) {
-    const p = document.createElement('p')
-    p.textContent = todo.text
-    return p
+    const todoEl = document.createElement('div')
+    const checkboxEl = document.createElement('input')
+    const todoTextEl = document.createElement('span')
+    const removeButton = document.createElement('button')
+
+    checkboxEl.setAttribute('type', 'checkbox')
+    todoEl.appendChild(checkboxEl)
+
+    todoTextEl.textContent = todo.text
+    todoEl.appendChild(todoTextEl)
+
+    removeButton.textContent = 'x'
+    todoEl.appendChild(removeButton)
+
+    return todoEl
 }
 
 // Get the DOM element for list summary
