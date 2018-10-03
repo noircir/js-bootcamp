@@ -8,14 +8,17 @@ renderNotes(notes, filters)
 
 // Create a note
 document.querySelector('#create-note').addEventListener('click', function (e) {
-    // empty note by default
+
+    const id = uuidv4()
+
     notes.push({
-        id: uuidv4(),
+        id,
         title: '',
         body: ''
     })
     saveNotes(notes)
-    renderNotes(notes, filters)
+    // Redirect redirect to a location with id
+    location.assign(`/edit.html#${id}`)
 })
 
 // Search for a note
