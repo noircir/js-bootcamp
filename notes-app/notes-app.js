@@ -3,6 +3,7 @@ let notes = getSavedNotes()
 const filters = {
     searchText: ''
 }
+const timestamp = moment().valueOf()
 
 renderNotes(notes, filters)
 
@@ -14,7 +15,9 @@ document.querySelector('#create-note').addEventListener('click', function (e) {
     notes.push({
         id,
         title: '',
-        body: ''
+        body: '',
+        createdAt: timestamp,
+        updatedAt: timestamp
     })
     saveNotes(notes)
     // Redirect redirect to a location with id
@@ -38,3 +41,8 @@ window.addEventListener('storage', function (e) {
         renderNotes(notes, filters)
     }
 })
+
+// 1. Add createdAt and updatedAt to the new notes (store timestamp)
+// 2. Update updatedAt when someone edits a title or body
+// 3. Delete all old notes before testing
+
