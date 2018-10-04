@@ -8,7 +8,7 @@ const getSavedNotes = function () {
     }
 }
 
-// Remove a note from the list
+// Remove a note by id
 const removeNote = function (id) {
     const noteIndex = notes.findIndex(function (note) {
         return note.id === id
