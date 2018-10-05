@@ -8,7 +8,7 @@ let notes = getSavedNotes()
 let note = notes.find((note) => note.id === noteId)
 
 // If no note with such id exists, redirect back to the home page
-if (note === undefined) {
+if (!note) {
     location.assign('/index.html')
 }
 
@@ -46,7 +46,7 @@ window.addEventListener('storage', (e) => {
         note = notes.find((note) => note.id === noteId)
 
         // If no note with such id exists, redirect back to the home page
-        if (note === undefined) {
+        if (!note) {
             location.assign('/index.html')
         }
 

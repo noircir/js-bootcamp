@@ -1,4 +1,8 @@
 const gradeCalc = function (score, totalScore) {
+    if (typeof score !== 'number' || typeof totalScore !== 'number') {
+        throw Error('Score and totalScore should be numbers')
+    }
+
     const percent = (score / totalScore) * 100;
     console.log(percent);
     let letterGrade = '';
@@ -17,5 +21,9 @@ const gradeCalc = function (score, totalScore) {
     return `You got a ${letterGrade} (${percent}%)`;
 };
 
-const result = gradeCalc(83, 100);
-console.log(result);
+try {
+    const result = gradeCalc(83, 'hundred');
+    console.log(result);
+} catch (e) {
+    console.log(e)
+}
