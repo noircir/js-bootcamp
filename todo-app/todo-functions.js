@@ -1,5 +1,5 @@
 // Fetch existing todos from localStorage
-const getSavedTodos = function () {
+const getSavedTodos = () => {
     todosJSON = localStorage.getItem('todos')
     console.log(todosJSON)
     // If local storage has data, parse it and use it
@@ -11,15 +11,13 @@ const getSavedTodos = function () {
 }
 
 // Save todos to localStorage
-const saveTodos = function (todos) {
-    localStorage.setItem('todos', JSON.stringify(todos))
-}
+const saveTodos = (todos) => localStorage.setItem('todos', JSON.stringify(todos))
 
 // Render application todos based on filters
-const renderTodos = function (todos, filters) {
+const renderTodos = (todos, filters) => {
     // SOLUTION 3
 
-    const filteredTodos = todos.filter(function (todo) {
+    const filteredTodos = todos.filter((todo) => {
         const searchTextMatch = todo.text.toLowerCase().includes(filters.searchText.toLowerCase().trim())
         const hideCompletedMatch = !filters.hideCompleted || !todo.completed
         return searchTextMatch && hideCompletedMatch
@@ -52,16 +50,14 @@ const renderTodos = function (todos, filters) {
 
     generateSummaryDOM(filteredTodos)
 
-    filteredTodos.forEach(function (todo) {
+    filteredTodos.forEach((todo) => {
         document.querySelector('#div__todos').appendChild(generateTodoDOM(todo))
     })
 }
 
 // Remove a todo by id
-const removeTodo = function (id) {
-    const todoIndex = todos.findIndex(function (todo) {
-        return todo.id === id
-    })
+const removeTodo = (id) => {
+    const todoIndex = todos.findIndex((todo) => todo.id === id)
         
     if (todoIndex > -1) {
         todos.splice(todoIndex, 1)
@@ -69,10 +65,8 @@ const removeTodo = function (id) {
 }
 
 // Toggle 'completed' property 
-const toggleTodo = function (id) {
-    const todo = todos.find(function (todo) {
-        return todo.id === id
-    })
+const toggleTodo = (id) => {
+    const todo = todos.find((todo) => todo.id === id)
 
     if (todo !== undefined) {
         todo.completed = !todo.completed
@@ -80,7 +74,7 @@ const toggleTodo = function (id) {
 }
 
 // Get the DOM elements for an individual note
-const generateTodoDOM = function (todo) {
+const generateTodoDOM = (todo) => {
     const todoEl = document.createElement('div')
     const checkboxEl = document.createElement('input')
     const todoTextEl = document.createElement('span')
@@ -93,7 +87,7 @@ const generateTodoDOM = function (todo) {
     todoTextEl.textContent = todo.text
     todoEl.appendChild(todoTextEl)
 
-    checkboxEl.addEventListener('change', function () {
+    checkboxEl.addEventListener('change', () => {
         toggleTodo(todo.id)
         saveTodos(todos)
         renderTodos(todos, filters)
@@ -101,7 +95,7 @@ const generateTodoDOM = function (todo) {
 
     removeButton.textContent = 'x'
     todoEl.appendChild(removeButton)
-    removeButton.addEventListener('click', function () {
+    removeButton.addEventListener('click', () => {
         removeTodo(todo.id)
         saveTodos(todos)
         renderTodos(todos, filters)
@@ -111,9 +105,9 @@ const generateTodoDOM = function (todo) {
 }
 
 // Get the DOM element for list summary
-const generateSummaryDOM = function (filteredTodos) {
+const generateSummaryDOM = (filteredTodos) => {
 
-    const incompletedTodos = filteredTodos.filter(function (todo) {
+    const incompletedTodos = filteredTodos.filter((todo) => {
         return !todo.completed
     })
     
