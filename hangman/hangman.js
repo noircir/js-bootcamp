@@ -1,7 +1,9 @@
 const Hangman = function (word, remainingGuesses) {
     this.word = word.toLowerCase().split('')
+    // this.wordStr = this.word.join('')
     this.guessedLetters = ['']
     this.remainingGuesses = remainingGuesses
+    this.status = 'playing'
 }
 
 Hangman.prototype.getPuzzle = function () {
@@ -19,33 +21,64 @@ Hangman.prototype.getPuzzle = function () {
 
 Hangman.prototype.makeGuess = function (letter) {
     letter = letter.toLowerCase()
-    const isGoodGuess = this.word.includes(letter)
+    const isBadGuess = !this.word.includes(letter)
+    const isUnique = !this.guessedLetters.includes(letter)
 
-    if (!this.guessedLetters.includes(letter)) {
+    if (isUnique) {
         this.guessedLetters.push(letter)
-
-        if (!isGoodGuess && this.remainingGuesses !== 0) {
-            this.remainingGuesses -= 1
-        }
     }
+
+    if (isUnique && isBadGuess) {
+        this.remainingGuesses--
+    }
+
+    this.calculateStatus()
 }
 
-const game1 = new Hangman ('Cat', 4)
+// Hangman.prototype.calculateStatus1 = function () {
+//     // uncomment this.wordStr line in constructor
+//     if (this.remainingGuesses === 0) {
+//         this.status = 'failed'
+//     }
 
-// game1.makeGuess('c')
-console.log(`Puzzle: ${game1.getPuzzle()}`)
-console.log(`Remaining guesses: ${game1.remainingGuesses}`)
+//     if (this.getPuzzle() === this.wordStr) {
+//         this.status = 'finished'
+//     }
+// }
 
-const game2 = new Hangman('New Jersey', 4)
-// game2.makeGuess('p')
-// console.log(`Puzzle: ${game2.getPuzzle()}`)
-// console.log(`Remaining guesses: ${game2.remainingGuesses}`)
+// Hangman.prototype.calculateStatus2 = function () {
+//     const lettersUnguessed = this.word.filter((letter) => {
+//         return !this.guessedLetters.includes(letter)
+//     })
+//     const finished = lettersUnguessed.length === 0
 
-// Listen for keypresses
-window.addEventListener('keypress', function (e) {
-    const guess = String.fromCharCode(e.charCode)
-    game1.makeGuess(guess)
-    console.log(`Puzzle: ${game1.getPuzzle()}`)
-    console.log(`Remaining guesses: ${game1.remainingGuesses}`)
-})
+//     // let finished = true
 
+//     // this.word.forEach((letter) => {
+//     //     if (!this.guessedLetters.includes(letter)) {
+//     //         finished = false
+//     //     }
+//     // })
+
+//     if (this.remainingGuesses === 0) {
+//         this.status = 'failed'
+//     } else if (finished) {
+//         this.status = 'finished'
+//     } else {
+//         this.status = 'playing'
+//     }
+// }
+
+Hangman.prototype.calculateStatus = function () {
+    const finished = this.word.every((letter) => {
+        return this.guessedLetters.includes(letter)
+    })
+
+    if (this.remainingGuesses === 0) {
+        this.status = 'failed'
+    } else if (finished) {
+        this.status = 'finished'
+    } else {
+        this.status = 'playing'
+    }
+}
