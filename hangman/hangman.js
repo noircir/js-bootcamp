@@ -1,6 +1,5 @@
 const Hangman = function (word, remainingGuesses) {
     this.word = word.toLowerCase().split('')
-    // this.wordStr = this.word.join('')
     this.guessedLetters = ['']
     this.remainingGuesses = remainingGuesses
     this.status = 'playing'
@@ -23,6 +22,11 @@ Hangman.prototype.makeGuess = function (letter) {
     letter = letter.toLowerCase()
     const isBadGuess = !this.word.includes(letter)
     const isUnique = !this.guessedLetters.includes(letter)
+
+    if (this.status !== 'playing') {
+        // Stop the game: 'return' will return 'undefined'
+        return
+    }
 
     if (isUnique) {
         this.guessedLetters.push(letter)
@@ -70,9 +74,7 @@ Hangman.prototype.makeGuess = function (letter) {
 // }
 
 Hangman.prototype.calculateStatus = function () {
-    const finished = this.word.every((letter) => {
-        return this.guessedLetters.includes(letter)
-    })
+    const finished = this.word.every((letter) => this.guessedLetters.includes(letter))
 
     if (this.remainingGuesses === 0) {
         this.status = 'failed'
@@ -80,5 +82,17 @@ Hangman.prototype.calculateStatus = function () {
         this.status = 'finished'
     } else {
         this.status = 'playing'
+    }
+}
+
+Hangman.prototype.getStatusMessage = function () {
+    if (this.status === 'playing') {
+        return `Remaining guesses left: ${this.remainingGuesses}`
+    }
+    if (this.status === 'failed') {
+        return `Nice try! The word was "${this.word.join('')}"`
+    }
+    if (this.status === 'finished') {
+        return `Great work! You guessed the word.`
     }
 }
