@@ -1,43 +1,107 @@
-const Hangman = function (word, remainingGuesses) {
-    this.word = word.toLowerCase().split('')
-    this.guessedLetters = ['']
-    this.remainingGuesses = remainingGuesses
-    this.status = 'playing'
-}
+class Hangman {
+    constructor(word, remainingGuesses) {
+        this.word = word.toLowerCase().split('')
+        this.guessedLetters = ['']
+        this.remainingGuesses = remainingGuesses
+        this.status = 'playing'
+    }
+    getPuzzle() {
+        let puzzle = ''
+        this.word.forEach((letter) => {
+            if (this.guessedLetters.includes(letter) || letter === ' ') {
+                puzzle += letter
+            } else {
+                puzzle += '*'
+            }
+        })
+        return puzzle
+    }
+    makeGuess(letter) {
+        letter = letter.toLowerCase()
+        const isBadGuess = !this.word.includes(letter)
+        const isUnique = !this.guessedLetters.includes(letter)
 
-Hangman.prototype.getPuzzle = function () {
-    let puzzle = ''
-    
-    this.word.forEach((letter) => {
-        if (this.guessedLetters.includes(letter) || letter === ' ') {
-            puzzle += letter
-        } else {
-            puzzle += '*'
+        if (this.status !== 'playing') {
+            // Stop the game: 'return' will return 'undefined'
+            return
         }
-    })
-    return puzzle
+
+        if (isUnique) {
+            this.guessedLetters.push(letter)
+        }
+
+        if (isUnique && isBadGuess) {
+            this.remainingGuesses--
+        }
+
+        this.calculateStatus()
+    }
+    calculateStatus() {
+        const finished = this.word.every((letter) => this.guessedLetters.includes(letter))
+
+        if (this.remainingGuesses === 0) {
+            this.status = 'failed'
+        } else if (finished) {
+            this.status = 'finished'
+        } else {
+            this.status = 'playing'
+        }
+    }
+    getStatusMessage() {
+        if (this.status === 'playing') {
+            return `Remaining guesses left: ${this.remainingGuesses}`
+        }
+        if (this.status === 'failed') {
+            return `Nice try! The word was "${this.word.join('')}"`
+        }
+        if (this.status === 'finished') {
+            return `Great work! You guessed the word.`
+        }
+    }
 }
 
-Hangman.prototype.makeGuess = function (letter) {
-    letter = letter.toLowerCase()
-    const isBadGuess = !this.word.includes(letter)
-    const isUnique = !this.guessedLetters.includes(letter)
 
-    if (this.status !== 'playing') {
-        // Stop the game: 'return' will return 'undefined'
-        return
-    }
 
-    if (isUnique) {
-        this.guessedLetters.push(letter)
-    }
+// const Hangman = function (word, remainingGuesses) {
+//     this.word = word.toLowerCase().split('')
+//     this.guessedLetters = ['']
+//     this.remainingGuesses = remainingGuesses
+//     this.status = 'playing'
+// }
 
-    if (isUnique && isBadGuess) {
-        this.remainingGuesses--
-    }
+// Hangman.prototype.getPuzzle = function () {
+//     let puzzle = ''
+    
+//     this.word.forEach((letter) => {
+//         if (this.guessedLetters.includes(letter) || letter === ' ') {
+//             puzzle += letter
+//         } else {
+//             puzzle += '*'
+//         }
+//     })
+//     return puzzle
+// }
 
-    this.calculateStatus()
-}
+// Hangman.prototype.makeGuess = function (letter) {
+//     letter = letter.toLowerCase()
+//     const isBadGuess = !this.word.includes(letter)
+//     const isUnique = !this.guessedLetters.includes(letter)
+
+//     if (this.status !== 'playing') {
+//         // Stop the game: 'return' will return 'undefined'
+//         return
+//     }
+
+//     if (isUnique) {
+//         this.guessedLetters.push(letter)
+//     }
+
+//     if (isUnique && isBadGuess) {
+//         this.remainingGuesses--
+//     }
+
+//     this.calculateStatus()
+// }
 
 // Hangman.prototype.calculateStatus1 = function () {
 //     // uncomment this.wordStr line in constructor
@@ -73,26 +137,26 @@ Hangman.prototype.makeGuess = function (letter) {
 //     }
 // }
 
-Hangman.prototype.calculateStatus = function () {
-    const finished = this.word.every((letter) => this.guessedLetters.includes(letter))
+// Hangman.prototype.calculateStatus = function () {
+//     const finished = this.word.every((letter) => this.guessedLetters.includes(letter))
 
-    if (this.remainingGuesses === 0) {
-        this.status = 'failed'
-    } else if (finished) {
-        this.status = 'finished'
-    } else {
-        this.status = 'playing'
-    }
-}
+//     if (this.remainingGuesses === 0) {
+//         this.status = 'failed'
+//     } else if (finished) {
+//         this.status = 'finished'
+//     } else {
+//         this.status = 'playing'
+//     }
+// }
 
-Hangman.prototype.getStatusMessage = function () {
-    if (this.status === 'playing') {
-        return `Remaining guesses left: ${this.remainingGuesses}`
-    }
-    if (this.status === 'failed') {
-        return `Nice try! The word was "${this.word.join('')}"`
-    }
-    if (this.status === 'finished') {
-        return `Great work! You guessed the word.`
-    }
-}
+// Hangman.prototype.getStatusMessage = function () {
+//     if (this.status === 'playing') {
+//         return `Remaining guesses left: ${this.remainingGuesses}`
+//     }
+//     if (this.status === 'failed') {
+//         return `Nice try! The word was "${this.word.join('')}"`
+//     }
+//     if (this.status === 'finished') {
+//         return `Great work! You guessed the word.`
+//     }
+// }
