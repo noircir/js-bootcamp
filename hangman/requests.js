@@ -1,7 +1,7 @@
 // getPuzzle is a function that takes a function as an argument. 
 // We call this argument function a "callback".
 
-const getPuzzle = (callback) => {
+const getPuzzle = (wordCount, callback) => {
     // You can't use a return statement because getPuzzle is effectively 
     // an asychronous function. By the time the asynchronous function 
     // has finished executing, the JavaScript engine has moved pass it 
@@ -22,8 +22,7 @@ const getPuzzle = (callback) => {
         }
     })
 
-    request.open('GET', 'http://puzzle.mead.io/puzzle?wordCount=3')
-    // request.open('GET', 'http://puzzle.mead.io/slow-puzzle?wordCount=3')
+    request.open('GET', `http://puzzle.mead.io/puzzle?wordCount=${wordCount}`)
     request.send()
 }
 
@@ -41,3 +40,25 @@ const getPuzzle = (callback) => {
 //         throw new Error('Things did no t go well')
 //     }
 // }
+
+const getCountryDetails = (countryCode, callback) => {
+
+    const request = new XMLHttpRequest()
+
+    request.addEventListener('readystatechange', (e) => {
+        if (e.target.readyState === 4 && e.target.status === 200) {
+
+            const data = JSON.parse(e.target.responseText)
+            // 'filter' will return an array with one element; 'find' returns an object
+            const country = data.find((country) => country.alpha2Code === countryCode.toUpperCase())
+            callback(undefined, country.name)
+
+        } else if (e.target.readyState === 4) {
+            callback('Unable to fetch data')
+        }
+    })
+
+    request.open('GET', 'http://restcountries.eu/rest/v2/all')
+    request.send()
+
+}
