@@ -24,9 +24,12 @@ getPuzzle((error, puzzle) => {
     } else {
         console.log(puzzle)
     }
-    
 })
 
+// const puzzle = getPuzzleSync()
+// console.log(puzzle)
+
+console.log('Do something else')
 
 // const countryCode = "US"
 // const request2 = new XMLHttpRequest()
