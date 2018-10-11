@@ -1,0 +1,27 @@
+// getPuzzle is a function that takes a function as an argument. 
+// We call this argument function a "callback".
+
+const getPuzzle = (callback) => {
+    // You can't use a return statement because getPuzzle is effectively 
+    // an asychronous function. By the time the asynchronous function 
+    // has finished executing, the JavaScript engine has moved pass it 
+    // to continue executing the rest of the program. 
+    // If you want to access and do stuff with the results from the HTTP request, 
+    // you must do so inside of the request.addEventListener callback.
+
+    // Making an HTTP request
+    const request = new XMLHttpRequest()
+
+    request.addEventListener('readystatechange', (e) => {
+        // e.target is the request itself
+        if (e.target.readyState === 4 && e.target.status === 200) {
+            const data = JSON.parse(e.target.responseText)
+            callback(undefined, data.puzzle)
+        } else if (e.target.readyState === 4) {
+            callback('An error has taken place', undefined)
+        }
+    })
+
+    request.open('GET', 'http://puzzle.mead.io/puzzle?wordCount=3')
+    request.send()
+}
