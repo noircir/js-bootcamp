@@ -41,7 +41,7 @@ const getPuzzle = (wordCount, callback) => {
 //     }
 // }
 
-const getCountryDetails = (countryCode, callback) => {
+const getCountry = (countryCode, callback) => {
 
     const request = new XMLHttpRequest()
 

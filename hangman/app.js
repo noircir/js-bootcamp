@@ -1,6 +1,7 @@
 const puzzleEl = document.querySelector('#puzzle')
 const guessesEl = document.querySelector('#guesses')
-const game1 = new Hangman('new york you', 5)
+const game1 = new Hangman('My fruit', 5)
+
 
 puzzleEl.textContent = game1.puzzle
 guessesEl.textContent = game1.statusMessage
@@ -16,7 +17,7 @@ window.addEventListener('keypress', (e) => {
 })
 
 // Defining callback function here 
-getPuzzle("2", (error, puzzle) => {
+getPuzzle("3", (error, puzzle) => {
     if (error) {
         console.log(`Error: ${error}`)
     } else {
@@ -30,7 +31,7 @@ getPuzzle("2", (error, puzzle) => {
 // console.log(puzzle)
 //------------------------------------------------------
 
-getCountryDetails('ge', (err, res) => {
+getCountry('se', (err, res) => {
     if (err) {
         console.log(`Error: ${err}`)
     } else {
@@ -38,4 +39,4 @@ getCountryDetails('ge', (err, res) => {
     }
 })
 
-console.log('Do something else')
+// console.log('Do something else')
