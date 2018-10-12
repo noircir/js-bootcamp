@@ -17,12 +17,19 @@ window.addEventListener('keypress', (e) => {
 })
 
 // Defining callback function here 
-getPuzzle("3", (error, puzzle) => {
-    if (error) {
-        console.log(`Error: ${error}`)
-    } else {
-        console.log(puzzle)
-    }
+// getPuzzle('2', (error, puzzle) => {
+//     if (error) {
+//         console.log(`Error: ${error}`)
+//     } else {
+//         console.log(puzzle)
+//     }
+// })
+
+// getPuzzle with Promise
+getPuzzle('2').then((puzzle) => {
+    console.log(puzzle)
+}, (error) => {
+    console.log(`Error: ${error}`)
 })
 
 //------------------------------------------------------
@@ -31,12 +38,10 @@ getPuzzle("3", (error, puzzle) => {
 // console.log(puzzle)
 //------------------------------------------------------
 
-getCountry('se', (err, res) => {
-    if (err) {
-        console.log(`Error: ${err}`)
-    } else {
-        console.log(`Country name: ${res}`)
-    }
+getCountry('fr').then((country) => {
+    console.log(country)
+}, (err) => {
+    console.log(err)
 })
 
 // console.log('Do something else')

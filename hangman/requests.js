@@ -1,30 +1,58 @@
 // getPuzzle is a function that takes a function as an argument. 
 // We call this argument function a "callback".
 
-const getPuzzle = (wordCount, callback) => {
-    // You can't use a return statement because getPuzzle is effectively 
-    // an asychronous function. By the time the asynchronous function 
-    // has finished executing, the JavaScript engine has moved pass it 
-    // to continue executing the rest of the program. 
-    // If you want to access and do stuff with the results from the HTTP request, 
-    // you must do so inside of the request.addEventListener callback.
+// ==============================================
+// Definition of getPuzzle() with a callback
+// ==============================================
 
-    // Making an HTTP request
+// const getPuzzle = (wordCount, callback) => {
+//     // You can't use a return statement because getPuzzle is effectively 
+//     // an asychronous function. By the time the asynchronous function 
+//     // has finished executing, the JavaScript engine has moved pass it 
+//     // to continue executing the rest of the program. 
+//     // If you want to access and do stuff with the results from the HTTP request, 
+//     // you must do so inside of the request.addEventListener callback.
+
+//     // Making an HTTP request
+//     const request = new XMLHttpRequest()
+
+//     request.addEventListener('readystatechange', (e) => {
+//         // e.target is the request itself
+//         if (e.target.readyState === 4 && e.target.status === 200) {
+//             const data = JSON.parse(e.target.responseText)
+//             callback(undefined, data.puzzle)
+//         } else if (e.target.readyState === 4) {
+//             callback('An error has taken place', undefined)
+//         }
+//     })
+
+//     request.open('GET', `http://puzzle.mead.io/puzzle?wordCount=${wordCount}`)
+//     request.send()
+// }
+
+
+// ==============================================
+// Definition of getPuzzle() with a promise
+// ==============================================
+
+const getPuzzle = (wordCount) => new Promise((resolve, reject) => {
     const request = new XMLHttpRequest()
 
     request.addEventListener('readystatechange', (e) => {
         // e.target is the request itself
         if (e.target.readyState === 4 && e.target.status === 200) {
             const data = JSON.parse(e.target.responseText)
-            callback(undefined, data.puzzle)
+            resolve(data.puzzle)
         } else if (e.target.readyState === 4) {
-            callback('An error has taken place', undefined)
+            reject('An error has taken place')
         }
     })
 
     request.open('GET', `http://puzzle.mead.io/puzzle?wordCount=${wordCount}`)
     request.send()
-}
+})
+    
+
 
 // Synchronous execution (deprecated) waits until the request is completed
 // const getPuzzleSync = () => {
@@ -41,8 +69,7 @@ const getPuzzle = (wordCount, callback) => {
 //     }
 // }
 
-const getCountry = (countryCode, callback) => {
-
+const getCountry = (countryCode) => new Promise((resolve, reject) => {
     const request = new XMLHttpRequest()
 
     request.addEventListener('readystatechange', (e) => {
@@ -51,14 +78,13 @@ const getCountry = (countryCode, callback) => {
             const data = JSON.parse(e.target.responseText)
             // 'filter' will return an array with one element; 'find' returns an object
             const country = data.find((country) => country.alpha2Code === countryCode.toUpperCase())
-            callback(undefined, country.name)
+            resolve(country.name)
 
         } else if (e.target.readyState === 4) {
-            callback('Unable to fetch data')
+            reject('Unable to fetch data')
         }
     })
 
     request.open('GET', 'http://restcountries.eu/rest/v2/all')
     request.send()
-
-}
+})
