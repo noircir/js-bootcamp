@@ -35,22 +35,22 @@
 // Definition of getPuzzle() with a promise
 // ==============================================
 
-const getPuzzle = (wordCount) => new Promise((resolve, reject) => {
-    const request = new XMLHttpRequest()
+// const getPuzzle = (wordCount) => new Promise((resolve, reject) => {
+//     const request = new XMLHttpRequest()
 
-    request.addEventListener('readystatechange', (e) => {
-        // e.target is the request itself
-        if (e.target.readyState === 4 && e.target.status === 200) {
-            const data = JSON.parse(e.target.responseText)
-            resolve(data.puzzle)
-        } else if (e.target.readyState === 4) {
-            reject('An error has taken place')
-        }
-    })
+//     request.addEventListener('readystatechange', (e) => {
+//         // e.target is the request itself
+//         if (e.target.readyState === 4 && e.target.status === 200) {
+//             const data = JSON.parse(e.target.responseText)
+//             resolve(data.puzzle)
+//         } else if (e.target.readyState === 4) {
+//             reject('An error has taken place')
+//         }
+//     })
 
-    request.open('GET', `http://puzzle.mead.io/puzzle?wordCount=${wordCount}`)
-    request.send()
-})
+//     request.open('GET', `http://puzzle.mead.io/puzzle?wordCount=${wordCount}`)
+//     request.send()
+// })
     
 
 
@@ -69,7 +69,10 @@ const getPuzzle = (wordCount) => new Promise((resolve, reject) => {
 //     }
 // }
 
-const getCountry = (countryCode) => new Promise((resolve, reject) => {
+
+// getCountry with XMLHttpRequest
+
+const getCountryOld = (countryCode) => new Promise((resolve, reject) => {
     const request = new XMLHttpRequest()
 
     request.addEventListener('readystatechange', (e) => {
@@ -88,3 +91,56 @@ const getCountry = (countryCode) => new Promise((resolve, reject) => {
     request.open('GET', 'http://restcountries.eu/rest/v2/all')
     request.send()
 })
+
+// Using 'fetch'
+
+const getPuzzle = (wordCount) => {
+    return fetch(`http://puzzle.mead.io/puzzle?wordCount=${wordCount}`).then((response) => {
+        if (response.status === 200) {
+            return response.json()
+        } else {
+            throw new Error('Unable fetch the puzzle')
+        }
+    }).then((data) => {
+        return data.puzzle
+    })
+}
+
+// getCountry with Fetch
+
+const getCountry = (countryCode) => {
+    return fetch(`http://restcountries.eu/rest/v2/all`).then((response) => {
+        if (response.status == 200) {
+            // returning promise here
+            return response.json() 
+        } else {
+            throw newError('Unable to fetch country')
+        }
+        // getting an array of countries here
+    }).then((data) => {
+        // now object
+        const countryObj = data.find((country) => country.alpha2Code === countryCode.toUpperCase())
+        // now property
+        return countryObj.name
+    })
+}
+
+const getLocation = () => {
+    return fetch('http://ipinfo.io/json?token=de53b5019be5e7').then((response) => {
+        if (response.status === 200) {
+            return response.json()
+        } else {
+            throw new Error('Unable to locate information')
+        }
+    })
+}
+
+const getWeather = (location) => {
+    return fetch(`http://api.darksky.net/forecast/8728b0a3da597a2260792a25873b1420/${location.loc}`).then((res) => {
+        if (response.status === 200) {
+            return res.json()
+        } else {
+            throw new Error('Unable to locate information')
+        }
+    })
+}
