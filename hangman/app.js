@@ -1,21 +1,28 @@
 const puzzleEl = document.querySelector('#puzzle')
 const guessesEl = document.querySelector('#guesses')
-const game1 = new Hangman('My fruit', 5)
-
-
-puzzleEl.textContent = game1.puzzle
-guessesEl.textContent = game1.statusMessage
+let game1
 
 // Listen for keypresses
 window.addEventListener('keypress', (e) => {
     const guess = String.fromCharCode(e.charCode)
     game1.makeGuess(guess)
-    
-    puzzleEl.textContent = game1.puzzle
-    guessesEl.textContent = game1.statusMessage
-    // console.log(game1.status)
+    render()
 })
 
+const render = () => {
+    puzzleEl.textContent = game1.puzzle
+    guessesEl.textContent = game1.statusMessage
+}
+
+const startGame = async () => {
+    const puzzle = await getPuzzle('2')
+    game1 = new Hangman(puzzle, 5)
+    render()
+}
+
+document.querySelector('#reset').addEventListener('click', startGame)
+
+startGame()
 // Defining callback function here 
 // getPuzzle('2', (error, puzzle) => {
 //     if (error) {
@@ -26,11 +33,11 @@ window.addEventListener('keypress', (e) => {
 // })
 
 // getPuzzle with Promise
-getPuzzle('3').then((puzzle) => {
-    console.log(puzzle)
-}).catch((err) => {
-    console.log(`Error: ${err}`)
-})
+// getPuzzle('3').then((puzzle) => {
+//     console.log(puzzle)
+// }).catch((err) => {
+//     console.log(`Error: ${err}`)
+// })
 
 // //------------------------------------------------------
 // // This was the synchronous way of calling a function
@@ -93,11 +100,11 @@ getLocation().then((location) => {
 
 // ^^ the same as above but with async/await
 
-getCurrentCountry().then((country) => {
-    console.log(`You live in ${country.name}`)
-}).catch((e) => {
-    console.log(`Error: ${e}`)
-})
+// getCurrentCountry().then((country) => {
+//     console.log(`You live in ${country.name}`)
+// }).catch((e) => {
+//     console.log(`Error: ${e}`)
+// })
 
 // https://api.darksky.net/forecast/8728b0a3da597a2260792a25873b1420/37.8267,-122.4233
 
