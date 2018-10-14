@@ -16,6 +16,8 @@ class Hangman {
         })
         return puzzle
     }
+    // Before transforming function to getter
+
     // getPuzzle() {
     //     let puzzle = ''
     //     this.word.forEach((letter) => {
@@ -60,7 +62,7 @@ class Hangman {
     }
     get statusMessage() {
         if (this.status === 'playing') {
-            return `Remaining guesses left: ${this.remainingGuesses}`
+            return `Guesses left: ${this.remainingGuesses}`
         }
         if (this.status === 'failed') {
             return `Nice try! The word was "${this.word.join('')}"`
@@ -69,6 +71,8 @@ class Hangman {
             return `Great work! You guessed the word.`
         }
     }
+    // Before transforming function to getter
+
     // getStatusMessage() {
     //     if (this.status === 'playing') {
     //         return `Remaining guesses left: ${this.remainingGuesses}`

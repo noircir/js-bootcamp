@@ -10,7 +10,15 @@ window.addEventListener('keypress', (e) => {
 })
 
 const render = () => {
-    puzzleEl.textContent = game1.puzzle
+    // puzzleEl.textContent = game1.puzzle  // the old way we called this getter 'puzzle'
+    // Now drawing each letter within a <span>
+    puzzleEl.innerHTML = ''
+
+    game1.puzzle.split('').forEach((letter) => {
+        const puzzleChar = document.createElement('span')
+        puzzleChar.textContent = letter
+        puzzleEl.appendChild(puzzleChar)
+    })
     guessesEl.textContent = game1.statusMessage
 }
 

@@ -4,15 +4,19 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Hangman</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="/styles/styles.css" />
+    <link href="/images/favicon.png" rel="icon">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <h2 id="puzzle"></h2>
-    <h2 id="guesses"></h2>
-    <button id="reset">Reset</button>
+    <div>
+        <div id="puzzle" class="puzzle"></div>
+        <h3 id="guesses"></h3>
+        <button id="reset" class="button">Reset</button>
+    </div>
 
-    <script src="requests.js"></script>
-    <script src="hangman.js"></script>
-    <script src="app.js"></script>
+    <script src="scripts/requests.js"></script>
+    <script src="scripts/hangman.js"></script>
+    <script src="scripts/app.js"></script>
 </body>
 </html>
