@@ -94,7 +94,7 @@ const getCountryOld = (countryCode) => new Promise((resolve, reject) => {
 
 // Using 'fetch'
 
-const getPuzzle = (wordCount) => {
+const getPuzzleFetch = (wordCount) => {
     return fetch(`http://puzzle.mead.io/puzzle?wordCount=${wordCount}`).then((response) => {
         if (response.status === 200) {
             return response.json()
@@ -106,9 +106,22 @@ const getPuzzle = (wordCount) => {
     })
 }
 
+// Using 'async/await'
+
+const getPuzzle = async (wordCount) => {
+    const response = await fetch(`http://puzzle.mead.io/puzzle?wordCount=${wordCount}`)
+
+    if (response.status === 200) {
+        const data = await response.json()
+        return data.puzzle
+    } else {
+        throw new Error('Unable fetch the puzzle')
+    }
+}
+
 // getCountry with Fetch
 
-const getCountry = (countryCode) => {
+const getCountryFetch = (countryCode) => {
     return fetch(`http://restcountries.eu/rest/v2/all`).then((response) => {
         if (response.status == 200) {
             // returning promise here
@@ -125,7 +138,20 @@ const getCountry = (countryCode) => {
     })
 }
 
-const getLocation = () => {
+// getCountry with async/await
+
+const getCountry = async (countryCode) => {
+    const response = await fetch(`http://restcountries.eu/rest/v2/all`)
+    
+    if(response.status === 200) {
+        const data = await response.json()
+        return data.find((country) => country.alpha2Code === countryCode.toUpperCase())
+    } else {
+        throw new Error('Unable to fetch country')
+    }
+}
+
+const getLocationFetch = () => {
     return fetch('http://ipinfo.io/json?token=de53b5019be5e7').then((response) => {
         if (response.status === 200) {
             return response.json()
@@ -133,6 +159,16 @@ const getLocation = () => {
             throw new Error('Unable to locate information')
         }
     })
+}
+
+const getLocation = async () => {
+    const response = await fetch('http://ipinfo.io/json?token=de53b5019be5e7')
+
+    if (response.status === 200) {
+        return response.json()
+    } else {
+        throw new Error('Unable to find location by IP address')
+    }
 }
 
 const getWeather = (location) => {
@@ -143,4 +179,12 @@ const getWeather = (location) => {
             throw new Error('Unable to locate information')
         }
     })
+}
+
+// Find country code by IP address, then full country name by country code
+// !!!!!!!
+
+const getCurrentCountry = async () => {
+    const location = await getLocation()
+    return getCountry(location.country)
 }

@@ -45,7 +45,7 @@ getPuzzle('3').then((puzzle) => {
 // })
 
 getCountry('dz').then((country) => {
-    console.log(country)
+    console.log(country.name)
 }).catch((err) => {
     console.log(`Error: ${err}`)
 })
@@ -81,12 +81,20 @@ getLocation().then((location) => {
 // Combine the two: getLocation and getCountry to get the full name of the country.
 // Promise chaining.
 
-getLocation().then((location) => {
-    return location.country
-}).then((countryCode) => {
-    return getCountry(countryCode)
-}).then((fullCountryName) => {
-    console.log(fullCountryName)
+// getLocation().then((location) => {
+//     return location.country
+// }).then((countryCode) => {
+//     return getCountry(countryCode)
+// }).then((fullCountryName) => {
+//     console.log(fullCountryName)
+// }).catch((e) => {
+//     console.log(`Error: ${e}`)
+// })
+
+// ^^ the same as above but with async/await
+
+getCurrentCountry().then((country) => {
+    console.log(`You live in ${country.name}`)
 }).catch((e) => {
     console.log(`Error: ${e}`)
 })
