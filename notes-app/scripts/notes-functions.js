@@ -83,17 +83,10 @@ const sortNotes = (notes, sortBy) => {
     } else if (sortBy === 'alphabetical') {
         return notes.sort((a, b) => {
             if (a.title.toLowerCase() < b.title.toLowerCase()) {
-                // console.log(a.title.toLowerCase())
-                // console.log(b.title.toLowerCase())
                 return -1
             } else if (a.title.toLowerCase() > b.title.toLowerCase()) {
-                console.log(a.title.toLowerCase())
-                console.log(b.title.toLowerCase())
-
                 return 1
             } else {
-                // console.log(a.title.toLowerCase())
-                // console.log(b.title.toLowerCase())
                 return 0
             }
         })

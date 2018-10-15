@@ -17,18 +17,19 @@ document.querySelector('#body__search-todo-input').addEventListener('input', (e)
 
 // Add a new todo 
 document.querySelector('#todo-form').addEventListener('submit', (e) => {
+    let text = e.target.elements.newTodo.value.trim()
     e.preventDefault()
-    newTodo = {
-        id: uuidv4(),
-        text: e.target.elements.newTodo.value,
-        completed: false
+
+    if (text.length > 0) {
+        todos.push({
+            id: uuidv4(),
+            text,
+            completed: false
+        })
     }
-    if (newTodo.text !== "") {
-        todos.push(newTodo)
-        saveTodos(todos)
-    }
-    e.target.elements.newTodo.value = ''
+    saveTodos(todos)
     renderTodos(todos, filters)
+    e.target.elements.newTodo.value = ''
 })
 
 // If "Hide completed" checkbox is checked, update filter

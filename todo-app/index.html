@@ -3,29 +3,39 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Todos</title>
+    <title>To-do App</title>
+    <link rel="icon" href="/images/favicon.png?v=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/styles/styles.css" />
 </head>
 <body>
-    <h1>Welcome to Todo App</h1>
-
-    <input type="text" id="body__search-todo-input" placeholder="Type search string">
-
-    <label>
-        <input id="hide-completed" type="checkbox"> Hide completed
-    </label>
-
-    <div id="div__todos">
+    <div class="header">
+        <div class="container">
+            <hi class="header__title">Tod-do App</hi>
+            <h2 class="header__subtitle">What do you need to do?</h2>
+        </div>
+    </div>
+    
+    <div class="actions">
+        <div class="actions__container">
+            <input type="text" id="body__search-todo-input" class="input" placeholder="Filter todos">
+            <label class="checkbox">
+                <input id="hide-completed" type="checkbox"> Hide completed
+            </label>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div id="div__todos">
+        </div>
+        <form id="todo-form">
+            <input type="text" class="input" placeholder="Add new todo" name="newTodo">
+            <button class="button">Submit</button>
+        </form>
     </div>
 
-    <form id="todo-form">
-        <input type="text" placeholder="Add new todo" name="newTodo">
-        <button>Submit</button>
-    </form>
-
-    <script src="uuid.js"></script>
-    <script src="todo-functions.js"></script>
-    <script src="todo-app.js"></script>
+    <script src="/scripts/uuid.js"></script>
+    <script src="/scripts/todo-functions.js"></script>
+    <script src="/scripts/todo-app.js"></script>
 </body>
 </html>
