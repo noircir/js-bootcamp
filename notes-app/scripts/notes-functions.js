@@ -21,29 +21,39 @@ const removeNote = (id) => {
 
 // Generate the DOM structure for a note
 const generateNoteDOM = (note) => {
-    const noteEl = document.createElement('div')
-    const textEl = document.createElement('a')
-    const button = document.createElement('button')
+    const noteEl = document.createElement('a')
+    const textEl = document.createElement('p')
+    const statusEl = document.createElement('p')
+
+    // const button = document.createElement('button')
     
-    // Set up the remove note button
-    button.textContent = 'x'
-    noteEl.appendChild(button)
-    button.addEventListener('click', () => {
-        removeNote(note.id)
-        saveNotes(notes)
-        renderNotes(notes, filters)
-    })
+    // // Set up the remove note button
+    // button.textContent = 'x'
+    // noteEl.appendChild(button)
+    // button.addEventListener('click', () => {
+    //     removeNote(note.id)
+    //     saveNotes(notes)
+    //     renderNotes(notes, filters)
+    // })
 
     // Set up the note title text
     if (note.title.length > 0) {
         textEl.textContent = note.title
     } else {
+        note.title = 'Unnamed note'
         textEl.textContent = 'Unnamed note'
     }
-    // Set up a link to the edit page with the node id
-    textEl.setAttribute('href', `/edit.html#${note.id}`)
-
+    textEl.classList.add('list-item__title')
     noteEl.appendChild(textEl)
+
+    // set up the link
+    noteEl.setAttribute('href', `/edit.html#${note.id}`)
+    noteEl.classList.add('list-item')
+
+    // Set up the status message
+    statusEl.textContent = generateLastEdited(note.updatedAt)
+    statusEl.classList.add('list-item__subtitle')
+    noteEl.appendChild(statusEl)
 
     return noteEl
 }
@@ -73,10 +83,17 @@ const sortNotes = (notes, sortBy) => {
     } else if (sortBy === 'alphabetical') {
         return notes.sort((a, b) => {
             if (a.title.toLowerCase() < b.title.toLowerCase()) {
+                // console.log(a.title.toLowerCase())
+                // console.log(b.title.toLowerCase())
                 return -1
             } else if (a.title.toLowerCase() > b.title.toLowerCase()) {
+                console.log(a.title.toLowerCase())
+                console.log(b.title.toLowerCase())
+
                 return 1
             } else {
+                // console.log(a.title.toLowerCase())
+                // console.log(b.title.toLowerCase())
                 return 0
             }
         })
@@ -87,16 +104,25 @@ const sortNotes = (notes, sortBy) => {
 
 // Render application notes
 const renderNotes = (notes, filters) => {
+    const notesEl = document.querySelector('#notes')
     notes = sortNotes(notes, filters.sortBy)
     const filteredNotes = notes.filter((note) => note.title.toLowerCase().includes(filters.searchText.toLowerCase()))
 
-    document.querySelector('#notes').innerHTML = ''
 
-    filteredNotes.forEach((note) => {
+    notesEl.innerHTML = ''
 
-        const noteEl = generateNoteDOM(note)
-        document.querySelector('#notes').appendChild(noteEl)
-    })
+    if (filteredNotes.length > 0) {
+        filteredNotes.forEach((note) => {
+            const noteEl = generateNoteDOM(note)
+            notesEl.appendChild(noteEl)
+        })
+    } else {
+        const emptyMessage = document.createElement('p')
+        emptyMessage.textContent = 'No notes to show'
+        // add class in JS file!!!
+        emptyMessage.classList.add('empty-message')
+        notesEl.appendChild(emptyMessage)
+    }
 }
 
 // Save notes in localStorage
