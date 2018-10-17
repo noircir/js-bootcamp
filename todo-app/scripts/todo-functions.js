@@ -62,7 +62,7 @@ const renderTodos = (todos, filters) => {
     } else {
         const notificationMsg = document.createElement('p')
         notificationMsg.classList.add('empty-message')
-        notificationMsg.textContent = 'No to-dos to show'
+        notificationMsg.textContent = 'There are no to-dos to show'
         todoEl.appendChild(notificationMsg)
     }
 }

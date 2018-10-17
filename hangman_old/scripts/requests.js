@@ -88,14 +88,14 @@ const getCountryOld = (countryCode) => new Promise((resolve, reject) => {
         }
     })
 
-    request.open('GET', 'http://restcountries.eu/rest/v2/all')
+    request.open('GET', '//restcountries.eu/rest/v2/all')
     request.send()
 })
 
 // Using 'fetch'
 
 const getPuzzleFetch = (wordCount) => {
-    return fetch(`http://puzzle.mead.io/puzzle?wordCount=${wordCount}`).then((response) => {
+    return fetch(`//puzzle.mead.io/puzzle?wordCount=${wordCount}`).then((response) => {
         if (response.status === 200) {
             return response.json()
         } else {
@@ -109,7 +109,7 @@ const getPuzzleFetch = (wordCount) => {
 // Using 'async/await'
 
 const getPuzzle = async (wordCount) => {
-    const response = await fetch(`http://puzzle.mead.io/puzzle?wordCount=${wordCount}`)
+    const response = await fetch(`//puzzle.mead.io/puzzle?wordCount=${wordCount}`)
 
     if (response.status === 200) {
         const data = await response.json()
@@ -122,7 +122,7 @@ const getPuzzle = async (wordCount) => {
 // getCountry with Fetch
 
 const getCountryFetch = (countryCode) => {
-    return fetch(`http://restcountries.eu/rest/v2/all`).then((response) => {
+    return fetch(`//restcountries.eu/rest/v2/all`).then((response) => {
         if (response.status == 200) {
             // returning promise here
             return response.json() 
@@ -141,7 +141,7 @@ const getCountryFetch = (countryCode) => {
 // getCountry with async/await
 
 const getCountry = async (countryCode) => {
-    const response = await fetch(`http://restcountries.eu/rest/v2/all`)
+    const response = await fetch(`//restcountries.eu/rest/v2/all`)
     
     if(response.status === 200) {
         const data = await response.json()
@@ -152,7 +152,7 @@ const getCountry = async (countryCode) => {
 }
 
 const getLocationFetch = () => {
-    return fetch('http://ipinfo.io/json?token=de53b5019be5e7').then((response) => {
+    return fetch('//ipinfo.io/json?token=de53b5019be5e7').then((response) => {
         if (response.status === 200) {
             return response.json()
         } else {
@@ -162,7 +162,7 @@ const getLocationFetch = () => {
 }
 
 const getLocation = async () => {
-    const response = await fetch('http://ipinfo.io/json?token=de53b5019be5e7')
+    const response = await fetch('//ipinfo.io/json?token=de53b5019be5e7')
 
     if (response.status === 200) {
         return response.json()
@@ -172,7 +172,7 @@ const getLocation = async () => {
 }
 
 const getWeather = (location) => {
-    return fetch(`http://api.darksky.net/forecast/8728b0a3da597a2260792a25873b1420/${location.loc}`).then((res) => {
+    return fetch(`//api.darksky.net/forecast/8728b0a3da597a2260792a25873b1420/${location.loc}`).then((res) => {
         if (response.status === 200) {
             return res.json()
         } else {
