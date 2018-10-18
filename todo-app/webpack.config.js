@@ -1,14 +1,10 @@
 const path = require('path')
-const webpack = require('webpack');
 
 module.exports = {
-    entry: {
-        index: ['babel-polyfill', './src/index.js'],
-        edit: ['babel-polyfill', './src/edit.js'],
-    },
+    entry: ['babel-polyfill', './src/index.js'],
     output: {
         path: path.resolve(__dirname, 'public/scripts'),
-        filename: '[name]-bundle.js'
+        filename: 'bundle.js'
     },
     module: {
         rules: [{
@@ -26,8 +22,5 @@ module.exports = {
         contentBase: path.resolve(__dirname, 'public'),
         publicPath: '/scripts/'
     }, 
-    plugins: [
-        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
-    ],
     devtool: 'source-map'
 }

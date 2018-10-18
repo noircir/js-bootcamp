@@ -37,8 +37,3 @@ document.querySelector('#hide-completed').addEventListener('change', (e) => {
     filters.hideCompleted = e.target.checked
     renderTodos(todos, filters)
 })
-
-document.querySelector('#hide-completed').addEventListener('change', (e) => {
-    filters.hideCompleted = e.target.checked
-    renderTodos(todos, filters)
-})
