@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Notes</title>
+    <link rel="icon" href="/images/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href = "/styles/styles.css"/>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="heaser__title">Welcome to Notes App</h1>
+            <h2 class="header__subtitle">Take notes and never forget</h2>
+        </div>
+    </header>
+
+    <div class="actions">
+        <div class="actions__container">
+            <input type="text" id="search-text" class="input" placeholder="Enter search string">
+
+            <select id="filter-by" class="dropdown">
+                <option value="byEdited">Sort by last edited</option>
+                <option value="byCreated">Sort by recently created</option>
+                <option value="alphabetical">Sort alphabetically</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="notes"></div>
+        <button id="create-note" class="button">Create Note</button>
+    </div>
+  
+    <!-- <script src="http://wzrd.in/standalone/uuid%2Fv4@latest"></script> -->
+    <script src="/scripts/index-bundle.js"></script>
+</body>
+</html>

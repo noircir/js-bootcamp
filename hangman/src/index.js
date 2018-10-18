@@ -1,8 +1,5 @@
 import Hangman from './hangman'
 import getPuzzle from './requests'
-import uuidv4 from 'uuid/v4'
-
-console.log(uuidv4())
 
 const puzzleEl = document.querySelector('#puzzle')
 const guessesEl = document.querySelector('#guesses')
