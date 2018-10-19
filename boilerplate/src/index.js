@@ -36,3 +36,12 @@ const team = {
 //Spread operator
 
 printTeam(team.name, team.coach, ...team.players)
+
+// Cloning an Array
+const cities = ['Barcelona', 'Paris', 'Singapour', 'Tokyo']
+
+// Adding an item to array without using push or unshift
+const citiesCopy = ['Amsterdam', ...cities]
+const citiesCopy2 = [...cities, 'Beijin']
+
+console.log(citiesCopy2)
