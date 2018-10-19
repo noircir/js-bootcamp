@@ -7,11 +7,10 @@ import { getFilters } from './filters'
 
 const renderTodos = () => {
     const todoEl = document.querySelector('#div__todos')
-    const filters = getFilters()
-    
+    const {searchText, hideCompleted} = getFilters()
     const filteredTodos = getTodos().filter((todo) => {
-        const searchTextMatch = todo.text.toLowerCase().includes(filters.searchText.toLowerCase().trim())
-        const hideCompletedMatch = !filters.hideCompleted || !todo.completed
+        const searchTextMatch = todo.text.toLowerCase().includes(searchText.toLowerCase().trim())
+        const hideCompletedMatch = !hideCompleted || !todo.completed
         return searchTextMatch && hideCompletedMatch
     })
 
